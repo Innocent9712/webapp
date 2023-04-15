@@ -68,10 +68,20 @@ or add sudoer user to docker group
 
 sudo usermod -aG docker $USER
 
+> Note:
+> Also add the jenkins user to the docker group so jenkins has the permission to use docker
+> `sudo usermod -aG docker jenkins`
+
   
 docker run -p 8080:8080 -p 50000:50000 -d -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts
 
+Another thing to note:
 
+> Q: do shell commands specified in a jenkins pipeline that are supposed to run in the host machine work if jenkins was setup as a container?
+
+> A: By default, shell commands in a Jenkins pipeline run inside a Docker container. This means that if you want to execute shell commands on the host machine from a Jenkins pipeline, you need to use a Docker image that has access to the Docker socket on the host machine. This is typically achieved by mounting the Docker socket as a volume when running the Jenkins container.
+>
+> So if you set up Jenkins as a container and mount the Docker socket as a volume, then you can run shell commands on the host machine from a Jenkins pipeline. However, you should exercise caution when doing so as it can potentially compromise the security of the host machine.
 
 https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-on-ubuntu-20-04
 https://www.ionos.com/digitalguide/server/configuration/install-java-on-ubuntu/
