@@ -22,7 +22,7 @@ pipeline {
         sshagent(['tomcat']) {
           sh '''
             scp -o StrictHostKeyChecking=no target/*.war ubuntu@3.87.208.75:/tmp/
-            ssh -o StrictHostKeyChecking=no ubuntu@3.87.208.75 "sudo mv /tmp/*.war /opt/tomcat/webapps/ && sudo chown tomcat:tomcat /opt/tomcat/webapps/*.war"
+            ssh -o StrictHostKeyChecking=no ubuntu@3.87.208.75 "sudo mv /tmp/*.war /opt/tomcat/webapps/ && sudo find /opt/tomcat/webapps/ -maxdepth 1 -name "*.war" -exec chown tomcat:tomcat {} +"
           '''
         }      
       }       
